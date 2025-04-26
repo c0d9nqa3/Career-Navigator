@@ -61,9 +61,7 @@ pip install -r requirements.txt
 Create a `.env` file in the root directory with the following format:
 
 ```
-OPENAI_API_KEY=your_openai_key_here  # (Optional if using OpenAI embeddings)
 PINECONE_API_KEY=your_pinecone_key_here
-PINECONE_ENV=gcp-starter              # Environment region for Pinecone (e.g., gcp-starter, us-east-1-aws)
 ```
 
 ### 4. Run the Application
