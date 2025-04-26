@@ -34,6 +34,7 @@ Final project/
 
 ### 1. Clone the repository
 
+
 ### 2. Create and activate a virtual environment
 
 ```bash
@@ -66,7 +67,7 @@ No environment (region) variable is needed because Pinecone Serverless is used.
 
 ## Running Instructions
 
-### Step 1: Data Preprocessing (Optional)
+### Step 1: Data Preprocessing
 
 If needed, clean and merge raw data:
 
