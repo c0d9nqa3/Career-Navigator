@@ -11,8 +11,8 @@ Final project/
 ├── backend/
 │   ├── database.py             # Upload embedded vectors to Pinecone
 │   ├── embedding.py            # Generate embeddings from cleaned text
-│   ├── preprocessing.py        # (Optional) Data cleaning and merging
-│   └── retrieval.py            # (Optional) Command-line retrieval script
+│   ├── preprocessing.py        # Data cleaning and merging
+│   └── retrieval.py            # Command-line retrieval script
 ├── data/
 │   ├── processed/
 │   │   ├── embedded_data.jsonl    # Pre-computed vector embeddings
