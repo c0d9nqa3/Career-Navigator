@@ -1,113 +1,150 @@
 # Career Navigator AI
 
-Career Navigator AI is a semantic search application that connects job descriptions and resumes using vector embeddings and Pinecone vector database. It enables intelligent matching, filtering, and exploration of resume-job relevance through a responsive Streamlit interface.
+Career Navigator AI is a semantic search application that matches resumes and job descriptions using vector embeddings and a Pinecone vector database. It enables intelligent matching, filtering, and retrieval through a user-friendly Streamlit web interface.
 
 ---
 
 ## Project Structure
 
 ```
-CareerNavigator/
-├── app.py                     # Streamlit web application entry point
+Final project/
 ├── backend/
-│   ├── embedding.py            # Generate and save vector embeddings
-│   ├── database.py             # Load embeddings into Pinecone index
-│   └── retrieval.py            # Perform semantic search queries
+│   ├── database.py             # Upload embedded vectors to Pinecone
+│   ├── embedding.py            # Generate embeddings from cleaned text
+│   ├── preprocessing.py        # (Optional) Data cleaning and merging
+│   └── retrieval.py            # (Optional) Command-line retrieval script
 ├── data/
-│   ├── raw/                    # (Optional) Original raw data files
-│   └── processed/
-│       └── embedded_data.jsonl # Embeddings after preprocessing
+│   ├── processed/
+│   │   ├── embedded_data.jsonl    # Pre-computed vector embeddings
+│   │   └── merged_cleaned_dataset.csv # Cleaned dataset used for embedding
+│   └── raw/
+│       ├── Resume.csv             # Raw resume data
+│       └── training_data.csv      # Raw job description data
 ├── notebooks/
-│   └── data_exploration.ipynb  # Jupyter Notebook for initial data analysis
-├── utils/
-│   └── config.py, logger.py    # (Optional) Utility and configuration files
-├── .env                        # Environment variables (excluded from Git)
-├── requirements.txt            # Python dependencies
-└── README.md                   # Project documentation
+│   └── data_exploration.ipynb   # Jupyter notebook for initial EDA
+├── app.py                       # Streamlit web app main file
+├── .env                          # API keys (excluded from GitHub)
+├── .gitignore                    # Git ignore rules
+└── README.md                     # Project documentation
 ```
 
 ---
 
-## Key Features
+## Setup Instructions
 
-- Generate text embeddings using the `all-MiniLM-L6-v2` model from Sentence Transformers.
-- Store and retrieve semantic vectors using Pinecone Serverless architecture.
-- Perform category-specific search: resumes, jobs, or both.
-- Clean and structured UI using Streamlit with responsive design.
-- Resumes displayed in field-style structured format for better readability.
-- Expandable search results with collapsible containers.
-- Full-text display without truncation or visual cutoff.
-- Supports dark mode and light mode in Streamlit themes automatically.
-
----
-
-## Getting Started
-
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/career-navigator-ai.git
-cd career-navigator-ai
+git clone https://github.com/your-username/Career-Navigator.git
+cd Career-Navigator
 ```
 
-### 2. Install Required Packages
+### 2. Create and activate a virtual environment
+
+```bash
+python -m venv venv
+source venv/bin/activate      # On macOS/Linux
+venv\Scripts\activate         # On Windows
+```
+
+### 3. Install project dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Configure Environment Variables
+---
 
-Create a `.env` file in the root directory with the following format:
+## Prepare `.env` File
 
-```
-PINECONE_API_KEY=your_pinecone_key_here
-```
+Create a `.env` file in the root directory with the following content:
 
-### 4. Run the Application
-
-```bash
-streamlit run app.py
+```env
+PINECONE_API_KEY=your-pinecone-api-key
 ```
 
-The Streamlit app will open automatically in your browser.
+Replace `your-pinecone-api-key` with your real Pinecone API Key.
+
+No environment (region) variable is needed because Pinecone Serverless is used.
 
 ---
 
-## Usage Workflow
+## Running Instructions
 
-1. **Preprocess Data**: If necessary, use `backend/embedding.py` to embed raw data and save `.jsonl` output.
-2. **Upload to Pinecone**: Use `backend/database.py` to upload the embeddings into a Pinecone index.
-3. **Search and Retrieve**: Use `backend/retrieval.py` for API-based semantic search.
-4. **User Interface**: Operate and visualize the search results using `app.py` (Streamlit interface).
+### Step 1: Data Preprocessing (Optional)
+
+If needed, clean and merge raw data:
+
+```bash
+cd backend
+python preprocessing.py
+```
+
+Output file will be saved as `data/processed/merged_cleaned_dataset.csv`.
+
+---
+
+### Step 2: Embedding Generation
+
+Generate embeddings from cleaned text data:
+
+```bash
+python embedding.py
+```
+
+This will create `embedded_data.jsonl` under `data/processed/`.
+
+---
+
+### Step 3: Upload Embeddings to Pinecone
+
+Upload all vectors into Pinecone index:
+
+```bash
+python database.py
+```
+
+This automatically creates the index if it does not exist.
+
+---
+
+### Step 4: Launch Streamlit Web App
+
+Run the web application:
+
+```bash
+cd ..
+streamlit run app.py
+```
+
+After launching, visit `http://localhost:8501` to use the search interface.
+
+---
+
+## Features
+
+- Resume and job description semantic search
+- Category filtering (all/resume/job)
+- Top-K adjustable result retrieval
+- Expandable resume details view
+- Responsive and accessible UI
 
 ---
 
 ## Requirements
 
-- Python >= 3.10
-- streamlit
-- sentence-transformers
-- pinecone-client
+- Python 3.9 or 3.10
+- Streamlit
+- SentenceTransformers
+- Pinecone-client
+- Pandas
+- Tqdm
 - python-dotenv
-- tqdm
-- pandas
-- numpy
 
-All dependencies are listed in `requirements.txt`.
-
----
-
-
-## Notes
-
-- Pinecone free tier is sufficient for small-scale projects (up to 1M vectors).
-- If using OpenAI for embeddings, consider API usage costs and rate limits.
-- The app is designed for educational, research, and demonstration purposes.
+(All dependencies listed in `requirements.txt`.)
 
 ---
 
 ## License
 
-This project is licensed for personal, academic, and demonstration purposes only. Please contact the author if you wish to adapt it for commercial use.
-
+This project is licensed under the MIT License.
