@@ -98,19 +98,6 @@ All dependencies are listed in `requirements.txt`.
 
 ---
 
-## .gitignore Recommendation
-
-Make sure you exclude sensitive and cache files by adding a `.gitignore` with the following content:
-
-```
-.env
-__pycache__/
-*.pyc
-.ipynb_checkpoints/
-data/raw/
-```
-
----
 
 ## Notes
 
